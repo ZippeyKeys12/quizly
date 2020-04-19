@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+fire = "*"
+prompt-toolkit = "*"
+mistune = "==2.0.0a2"
+sre-yield = "*"
+click = "*"
+fuzzyfinder = "*"
+python-levenshtein = "*"
+pycorpora = "*"
+nltk = "*"
+cytoolz = "*"
+numpy = "*"
+spacy = "*"
+en-core-web-md = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.5/en_core_web_md-2.2.5.tar.gz"}
+
+[requires]
+python_version = "3.7"

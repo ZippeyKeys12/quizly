@@ -1,0 +1,53 @@
+[
+    { "title": "The Godfather", "year": 1972 },
+    { "title": "Leon: The Professional", "year": 1994 },
+    { "title": "Goodfellas", "year": 1990 },
+    { "title": "Terminator 2: Judgment Day", "year": 1991 },
+    { "title": "Trainspotting", "year": 1996 },
+    { "title": "T2 Trainspotting", "year": 2017 },
+    { "title": "City of God", "year": 2002 },
+    { "title": "Only God Forgives", "year": 2013 },
+    { "title": "Aguirre, the Wrath of God", "year": 1972 },
+    { "title": "Halloween", "year": 1978 },
+    { "title": "Halloween II", "year": 1981 },
+    { "title": "Halloween III: Season of the Witch", "year": 1982 },
+    { "title": "Halloween 4: The Return of Michael Myers", "year": 1988 },
+    { "title": "Halloween 5: The Revenge of Michael Myers", "year": 1989 },
+    { "title": "Halloween: The Curse of Michael Myers", "year": 1995 },
+    { "title": "Halloween H20: 20 Years Later", "year": 1998 },
+    { "title": "Halloween: Resurrection", "year": 2002 },
+    { "title": "Halloween", "year": 2007 },
+    { "title": "Halloween II", "year": 2009 },
+    { "title": "Halloween", "year": 2018 },
+    { "title": "Friday the 13th", "year": 1980 },
+    { "title": "Friday the 13th Part 2", "year": 1981 },
+    { "title": "Friday the 13th Part III", "year": 1982 },
+    { "title": "Friday the 13th: The Final Chapter", "year": 1984 },
+    { "title": "Friday the 13th: A New Beginning", "year": 1985 },
+    { "title": "Friday the 13th Part VI: Jason Lives", "year": 1986 },
+    { "title": "Friday the 13th Part VII: The New Blood", "year": 1988 },
+    {
+        "title": "Friday the 13th Part VIII: Jason Takes Manhattan",
+        "year": 1989
+    },
+    { "title": "Jason Goes to Hell: The Final Friday", "year": 1993 },
+    { "title": "Jason X", "year": 2002 },
+    { "title": "Friday the 13th", "year": 2009 },
+    { "title": "A Nightmare on Elm Street", "year": 1984 },
+    { "title": "A Nightmare on Elm Street 2: Freddy's Revenge", "year": 1985 },
+    { "title": "A Nightmare on Elm Street 3: Dream Warriors", "year": 1987 },
+    { "title": "A Nightmare on Elm Street 4: The Dream Master", "year": 1988 },
+    { "title": "A Nightmare on Elm Street 5: The Dream Child", "year": 1989 },
+    { "title": "Freddy's Dead: The Final Nightmare", "year": 1991 },
+    { "title": "Wes Craven's New Nightmare", "year": 1994 },
+    { "title": "Freddy vs. Jason", "year": 2003 },
+    {
+        "title": "Duck, You Sucker!",
+        "alt_titles": [
+            {
+                "title": "A Fistful of Dynamite"
+            }
+        ],
+        "year": 1971
+    }
+]
