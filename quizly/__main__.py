@@ -1,31 +1,61 @@
 import json
-import re
+import types
+from os import path
+from typing import Any, Dict
 
-from prompt_toolkit import PromptSession
-from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+import click
+from prompt_toolkit import print_formatted_text as print
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.validation import Validator
 
-from completer import TitleCompleter
 
-with open('data/movies.json', 'r') as f:
-    options = json.load(f)
+@click.group()
+def cli():
+    pass
 
-    for d in options:
-        if 'pattern' not in d.keys():
-            d['pattern'] = re.escape(d['title'])
 
-        try:
-            for t in d['alt_titles']:
-                if 'pattern' not in t.keys():
-                    t['pattern'] = re.escape(t['title'])
-        except KeyError:
-            pass
+@cli.command()
+def install():
+    print('install')
 
-session = PromptSession(completer=TitleCompleter(
-    options), auto_suggest=AutoSuggestFromHistory())
 
-try:
-    while True:
-        text = session.prompt('String: ')
+def ask_mode(modes: Dict[str, str]) -> str:
+    if len(modes.keys()) == 1:
+        # faster than next(iter(modes.keys()))
+        return modes[min(modes.keys())]
 
-except KeyboardInterrupt:
-    exit(0)
+    mode = prompt(
+        f'Choose a mode from {set(modes.keys())}: ',
+        completer=WordCompleter(modes.keys(), WORD=True),
+        validator=Validator.from_callable(
+            lambda x: x in modes,
+            error_message='Invalid mode',
+            move_cursor_to_end=True
+        ),
+        validate_while_typing=False)
+
+    return modes[mode]
+
+
+@cli.command()
+@click.argument('bundle')
+def run(bundle: str):
+    with open(path.join(path.dirname(__file__), 'bundles.json'), 'r') as f:
+        data = json.load(f)[bundle]
+        mode = ask_mode(data['entry'])
+        module: Any = types.ModuleType(data['name'])
+
+    with open(path.join(path.dirname(__file__), mode), 'r') as f:
+        exec(f.read(), module.__dict__)
+
+    try:
+        module.begin(mode)
+
+        module.loop()
+
+    except KeyboardInterrupt:
+        module.end()
+
+
+cli()

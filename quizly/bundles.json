@@ -1,0 +1,6 @@
+{
+    "movies": {
+        "name": "Movies",
+        "entry": { "Release Dates": "bundles/movies.py" }
+    }
+}

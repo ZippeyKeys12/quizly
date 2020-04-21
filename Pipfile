@@ -19,6 +19,14 @@ cytoolz = "*"
 numpy = "*"
 spacy = "*"
 en-core-web-md = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.5/en_core_web_md-2.2.5.tar.gz"}
+jsonschema = "*"
+tox = "*"
+tox-pipenv = "*"
+pytest = "*"
+pyperf = "*"
+codecov = "*"
+coverage = "*"
+tmdbsimple = "*"
 
 [requires]
 python_version = "3.7"
