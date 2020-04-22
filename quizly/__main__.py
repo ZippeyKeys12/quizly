@@ -1,13 +1,19 @@
 import json
-import types
 from os import path
-from typing import Any, Dict
+from types import ModuleType
+from typing import Any, Dict, KeysView
 
 import click
 from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.validation import Validator
+
+from dotenv import load_dotenv
+
+from .bundles.movies import directors, release_dates
+
+load_dotenv()
 
 
 @click.group()
@@ -20,14 +26,14 @@ def install():
     print('install')
 
 
-def ask_mode(modes: Dict[str, str]) -> str:
-    if len(modes.keys()) == 1:
-        # faster than next(iter(modes.keys()))
-        return modes[min(modes.keys())]
+def ask_mode(modes: KeysView[str]) -> str:
+    if len(modes) == 1:
+        # faster than next(iter(modes))
+        return min(modes)
 
     mode = prompt(
-        f'Choose a mode from {set(modes.keys())}: ',
-        completer=WordCompleter(modes.keys(), WORD=True),
+        f'Choose a mode from {sorted(modes)}: ',
+        completer=WordCompleter(modes, WORD=True),
         validator=Validator.from_callable(
             lambda x: x in modes,
             error_message='Invalid mode',
@@ -35,26 +41,48 @@ def ask_mode(modes: Dict[str, str]) -> str:
         ),
         validate_while_typing=False)
 
-    return modes[mode]
+    print()
+
+    return mode
+
+
+BUILTIN_BUNDLES = {
+    'movies': {
+        'entry': {
+            'Directors': directors,
+            'Release Dates': release_dates
+        }
+    }
+}
 
 
 @cli.command()
 @click.argument('bundle')
 def run(bundle: str):
-    with open(path.join(path.dirname(__file__), 'bundles.json'), 'r') as f:
-        data = json.load(f)[bundle]
-        mode = ask_mode(data['entry'])
-        module: Any = types.ModuleType(data['name'])
+    module: Any
+    data: Dict[str, Any]
 
-    with open(path.join(path.dirname(__file__), mode), 'r') as f:
-        exec(f.read(), module.__dict__)
+    if bundle in BUILTIN_BUNDLES:
+        data = BUILTIN_BUNDLES[bundle]['entry']
+        mode = ask_mode(data.keys())
+        module = data[mode]
 
+    else:
+        with open(path.join(path.dirname(__file__), 'bundles.json'), 'r') as f:
+            data = json.load(f)[bundle]
+            mode = ask_mode(data['entry'].keys())
+            module = ModuleType(data['name'])
+
+        with open(path.join(path.dirname(__file__), data['entry'][mode]), 'r') as f:
+            exec(f.read(), module.__dict__)
+
+    # Main loop
+    module.begin(mode)
     try:
-        module.begin(mode)
-
         module.loop()
-
     except KeyboardInterrupt:
+        pass
+    finally:
         module.end()
 
 
