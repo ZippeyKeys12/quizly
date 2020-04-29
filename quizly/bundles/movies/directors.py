@@ -73,19 +73,21 @@ def loop():
 
 
 def end():
-    percent = score / total * 100
+    if total != 0:
+        percent = score / total * 100
 
-    if percent == 100:
-        color = 'ansiwhite'
-    elif percent >= 90:
-        color = 'ansigreen'
-    elif percent >= 80:
-        color = 'gold'
-    elif percent >= 70:
-        color = 'darkorange'
-    else:
-        color = 'ansired'
+        if percent == 100:
+            color = 'ansiwhite'
+        elif percent >= 90:
+            color = 'ansigreen'
+        elif percent >= 80:
+            color = 'gold'
+        elif percent >= 70:
+            color = 'darkorange'
+        else:
+            color = 'ansired'
 
-    print(HTML(f'You got <b fg="{color}">{percent:.2f}%</b> correct'))
+        print(
+            HTML(f'You got <b fg="{color}">{percent:.2f}%</b> correct ({score}/{total})'))
 
     base_end()

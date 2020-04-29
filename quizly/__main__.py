@@ -4,12 +4,11 @@ from types import ModuleType
 from typing import Any, Dict, KeysView
 
 import click
+from dotenv import load_dotenv
 from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.validation import Validator
-
-from dotenv import load_dotenv
 
 from .bundles.movies import directors, release_dates
 
