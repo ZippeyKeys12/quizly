@@ -34,22 +34,23 @@ def base_begin(title: str, answer: str) -> List[Dict[str, Any]]:
     return data
 
 
+TOTAL_PAGES = 10
+
+
 def load_data() -> List[Dict[str, Any]]:
     discover = tmdb.Discover()
 
+    data: List = []
+
     with ProgressBar(title=MD('**Discovering Movies:**')) as pb:
-        resp = discover.movie()
-
-        data: List = []
-
         def add_discover(page_num: int):
             data.extend(discover.movie(page=page_num)['results'])
 
         with ThreadPoolExecutor(max_workers=5) as executor:
             future = [executor.submit(add_discover, i) for i in range(
-                1, resp['total_pages'] + 1)]
+                1, TOTAL_PAGES + 1)]
 
-            for _ in pb(as_completed(future), label='Querying TMDB:', total=resp['total_pages']):
+            for _ in pb(as_completed(future), label='Querying TMDB:', total=TOTAL_PAGES):
                 pass
 
     print()
@@ -60,20 +61,13 @@ def load_data() -> List[Dict[str, Any]]:
 
             crew = tmdb.Movies(movie['id']).credits()['crew']
 
-            start_index = 0
-            while crew[start_index]['department'] != 'Direction':
-                start_index += 1
-
-            for person in crew[start_index]:
+            for person in crew:
                 if person['job'] == 'Director':
                     if 'directors' not in movie:
                         movie['directors'] = [person]
 
                     else:
                         movie['directors'].append(person)
-
-                elif person['department'] != 'Direction':
-                    return
 
         with ThreadPoolExecutor(max_workers=10) as executor:
             future = [executor.submit(scan_crew, movie) for movie in data]
