@@ -28,6 +28,8 @@ coverage = '*'
 tmdbsimple = '*'
 textacy = '*'
 python-dotenv = '*'
+beautifulsoup4 = '*'
+lxml = '*'
 pyfiglet = '*'
 en-core-web-md = {file = 'https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.5/en_core_web_md-2.2.5.tar.gz'}
 clint = "*"
