@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 fire = '*'
-prompt-toolkit = '*'
+prompt-toolkit = '>=2.0'
 mistune = '==2.0.0a2'
 sre-yield = '*'
 click = '*'
@@ -28,9 +28,10 @@ coverage = '*'
 tmdbsimple = '*'
 textacy = '*'
 python-dotenv = '*'
-
-[packages.en-core-web-md]
-file = 'https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.5/en_core_web_md-2.2.5.tar.gz'
+pyfiglet = '*'
+en-core-web-md = {file = 'https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.5/en_core_web_md-2.2.5.tar.gz'}
+clint = "*"
+termcolor = "*"
 
 [requires]
 python_version = '3.7'

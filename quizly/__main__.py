@@ -4,11 +4,13 @@ from types import ModuleType
 from typing import Any, Dict, KeysView
 
 import click
+from clint.textui import indent, puts
 from dotenv import load_dotenv
-from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.validation import Validator
+from pyfiglet import figlet_format
+from termcolor import colored
 
 from .bundles.movies import directors, release_dates
 
@@ -58,6 +60,15 @@ BUILTIN_BUNDLES = {
 @cli.command()
 @click.argument('bundle')
 def run(bundle: str):
+    with indent(2):
+        puts(colored(figlet_format('Welcome To').rstrip(), attrs=['bold']))
+
+    print()
+
+    with indent(12):
+        puts(colored(figlet_format(
+            'Quizly', font='slant'), attrs=['bold']))
+
     module: Any
     data: Dict[str, Any]
 
