@@ -1,9 +1,9 @@
 from typing import Any, Callable, Dict, List
 
+from Levenshtein import ratio as levenshtein_ratio  # noqa
 from prompt_toolkit import HTML, PromptSession
 from prompt_toolkit import print_formatted_text as print
 
-from ...structures.levenshtein import levenshtein_ratio
 from ...util import normalize
 from .base import base_begin, base_end, base_loop
 

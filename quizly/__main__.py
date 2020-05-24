@@ -12,6 +12,7 @@ from prompt_toolkit.validation import Validator
 from pyfiglet import figlet_format
 from termcolor import colored
 
+from .bundles.movies import config as movie_config
 from .bundles.movies import directors, release_dates
 
 load_dotenv()
@@ -52,7 +53,8 @@ BUILTIN_BUNDLES = {
         'entry': {
             'Directors': directors,
             'Release Dates': release_dates
-        }
+        },
+        'config': movie_config
     }
 }
 
@@ -73,7 +75,7 @@ def run(bundle: str):
     data: Dict[str, Any]
 
     if bundle in BUILTIN_BUNDLES:
-        data = BUILTIN_BUNDLES[bundle]['entry']
+        data = BUILTIN_BUNDLES[bundle]['entry']  # type: ignore
         mode = ask_mode(data.keys())
         module = data[mode]
 
@@ -91,9 +93,29 @@ def run(bundle: str):
     try:
         module.loop()
     except KeyboardInterrupt:
-        pass
+        print()
     finally:
         module.end()
+
+
+@cli.command()
+@click.argument('bundle')
+def config(bundle: str):
+    module: Any
+    data: Dict[str, Any]
+
+    if bundle in BUILTIN_BUNDLES:
+        module = BUILTIN_BUNDLES[bundle]['config']
+
+    else:
+        with open(path.join(path.dirname(__file__), 'bundles.json'), 'r') as f:
+            data = json.load(f)[bundle]
+            module = ModuleType(data['name'])
+
+        with open(path.join(path.dirname(__file__), data['config']), 'r') as f:
+            exec(f.read(), module.__dict__)
+
+    module.main()
 
 
 cli()
